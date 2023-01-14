@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+    <script>
+        // APIキーの設定とSDK初期化
+        var ncmb = new NCMB("5906fd68d324c76f48d4c29c3cb589250d728cd08362e485a2732a6caeb8ce0e", "419f8c9f191f95603e7c73a16f8e771393604da508e5960b537126afae8cfd59");
+
+        // 保存先クラスの作成
+        var Food = ncmb.DataStore("Food");
+
+        function ichiran() {
+            var disp = document.getElementById("disp");
+
+
+            Food.fetchAll()
+                .then(function(results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var new_element1 = document.createElement('p');
+                        var new_element2 = document.createElement('p');
+                        var new_element3 = document.createElement('p');
+                        var new_element4 = document.createElement('p');
+                        var new_element5 = document.createElement('p');
+                        var new_element6 = document.createElement('hr');
+
+                        var object = results[i];
+
+                        new_element1.textContent = "記録日：" + object.myfood["kirokuDate"];
+                        disp.append(new_element1);
+
+                        new_element2.textContent = "主菜：" + object.myfood["maindish"];
+                        disp.append(new_element2);
+
+                        new_element3.textContent = "副菜：" + object.myfood["sidedish"];
+                        disp.append(new_element3);
+
+                        new_element4.textContent = "炭水化物：" + object.myfood["tansui"];
+                        disp.append(new_element4);
+
+                        new_element5.textContent = "汁物：" + object.myfood["soup"];
+                        disp.append(new_element5);
+
+                        disp.append(new_element6);
+                    }
+                })
+                .catch(function(err) {
+                    document.write(err);
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <a href=\ "index.html\">トップページ</a>
+    <input type="button" value="一覧" onclick="ichiran()">
+    <div id="disp"></div>
+</body>
+
+</html>

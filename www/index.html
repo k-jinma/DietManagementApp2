@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        // APIキーの設定とSDK初期化
+        var ncmb = new NCMB("5906fd68d324c76f48d4c29c3cb589250d728cd08362e485a2732a6caeb8ce0e","419f8c9f191f95603e7c73a16f8e771393604da508e5960b537126afae8cfd59");
+
+        // 保存先クラスの作成
+        var Food = ncmb.DataStore("Food");
+
+        class MyFood {
+            constructor(){
+                this.kirokuDate = document.getElementById("kirokuDate").value
+                this.maindish = document.getElementById("maindish").value;
+                this.sidedish = document.getElementById("sidedish").value;
+                this.tansui = document.getElementById("tansui").value;
+                this.soup = document.getElementById("soup").value;
+            }
+        }
+        function kakutei(){
+           
+            // 保存先クラスのインスタンスを生成
+            var food = new Food();
+            // 記録するクラスのインスタンスを生成
+            var myfood = new MyFood();
+
+            // 値を設定と保存
+            food.set("myfood", myfood)
+                .save()
+                .then(function(object){
+                // 保存に成功した場合の処理
+                })
+                .catch(function(err){
+                // 保存に失敗した場合の処理
+                });
+
+        }
+
+    </script>
+</head>
+<body>
+    <a href="ichiran.html">一覧</a>
+	<table>
+        <tr>
+            <td>日付</td>
+            <td><input type="date" id="kirokuDate"></td>
+        </tr>
+        <tr>
+            <td>主菜</td>
+            <td><input type="text" id="maindish"></td>
+        </tr>
+        <tr>
+            <td>副菜</td>
+            <td><input type="text" id="sidedish"></td>
+        </tr>
+        <tr>
+            <td>炭水化物</td>
+            <td><input type="text" id="tansui"></td>
+        </tr>
+                <tr>
+            <td>汁物</td>
+            <td><input type="text" id="soup"></td>
+        </tr> 
+        <tr>
+            <td><input type="button" value="確定" onclick="kakutei()"></td>
+        </tr>
+    </table>
+</body>
+</html>
