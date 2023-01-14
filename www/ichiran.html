@@ -16,7 +16,13 @@
 
         function ichiran() {
             var disp = document.getElementById("disp");
-
+            
+            if( disp.hasChildNodes() ){
+                // 子要素をすべて削除する　https://into-the-program.com/removechild/#removeChild
+                while(disp.lastChild){
+                    disp.removeChild(disp.lastChild);
+                }
+            }
 
             Food.fetchAll()
                 .then(function(results) {
