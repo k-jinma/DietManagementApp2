@@ -14,30 +14,60 @@
         // 保存先クラスの作成
         var Food = ncmb.DataStore("Food");
 
-        class MyFood {
-            constructor(){
-                this.kirokuDate = document.getElementById("kirokuDate").value
-                this.maindish = document.getElementById("maindish").value;
-                this.sidedish = document.getElementById("sidedish").value;
-                this.tansui = document.getElementById("tansui").value;
-                this.soup = document.getElementById("soup").value;
-            }
-        }
+
         function kakutei(){
            
             // 保存先クラスのインスタンスを生成
             var food = new Food();
-            // 記録するクラスのインスタンスを生成
-            var myfood = new MyFood();
 
-            // 値を設定と保存
-            food.set("myfood", myfood)
+            // 入力データを変数に保存①
+            if( document.getElementById("kirokuDate").value != "" ){
+                var kirokuDate = document.getElementById("kirokuDate").value
+            }else{
+                alert("日付を入力して下さい");
+                return;
+            }        
+            var kubun;
+            var kubun1 = document.getElementById("kubun1")
+            var kubun2 = document.getElementById("kubun2")
+            var kubun3 = document.getElementById("kubun3")
+            var kubun4 = document.getElementById("kubun4")
+
+            
+            if( kubun1.checked ){
+                kubun = kubun1.value
+            }
+            if( kubun2.checked ){
+                kubun = kubun2.value
+            }
+            if( kubun3.checked ){
+                kubun = kubun3.value
+            }
+            if( kubun4.checked ){
+                kubun = kubun4.value
+            }
+
+
+            var maindish = document.getElementById("maindish").value;
+            var sidedish = document.getElementById("sidedish").value;
+            var tansui = document.getElementById("tansui").value;
+            var soup = document.getElementById("soup").value;
+
+            // ①の変数を、データストアに保存
+            food.set("kirokuDate", kirokuDate)
+                .set("kubun", kubun)
+                .set("maindish", maindish)
+                .set("sidedish", sidedish)
+                .set("tansui", tansui)
+                .set("soup", soup)
                 .save()
                 .then(function(object){
-                // 保存に成功した場合の処理
+                    // 保存に成功した場合の処理
+                    alert("保存しました");
                 })
                 .catch(function(err){
-                // 保存に失敗した場合の処理
+                    // 保存に失敗した場合の処理
+                    alert("保存できませんでした");
                 });
 
         }
@@ -45,11 +75,19 @@
     </script>
 </head>
 <body>
-    <a href="ichiran.html">一覧</a>
+    <input type="button" id="back" onclick="location.href='ichiran.html'" value="一覧">
 	<table>
         <tr>
             <td>日付</td>
             <td><input type="date" id="kirokuDate"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label><input type="radio" name="kubun" id="kubun1" value="朝ごはん" checked>朝ごはん</label>
+                <label><input type="radio" name="kubun" id="kubun2" value="昼ごはん">昼ごはん</label>
+                <label><input type="radio" name="kubun" id="kubun3" value="晩ごはん">晩ごはん</label>
+                <label><input type="radio" name="kubun" id="kubun4" value="その他">その他</label>     
+            </td>
         </tr>
         <tr>
             <td>主菜</td>
@@ -63,7 +101,7 @@
             <td>炭水化物</td>
             <td><input type="text" id="tansui"></td>
         </tr>
-                <tr>
+        <tr>
             <td>汁物</td>
             <td><input type="text" id="soup"></td>
         </tr> 

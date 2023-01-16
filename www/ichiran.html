@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="components/loader.css">
     <script src="components/loader.js"></script>
     <script>
+
+        window.onload = function(){
+            ichiran();
+        }
+
         // APIキーの設定とSDK初期化
         var ncmb = new NCMB("5906fd68d324c76f48d4c29c3cb589250d728cd08362e485a2732a6caeb8ce0e", "419f8c9f191f95603e7c73a16f8e771393604da508e5960b537126afae8cfd59");
 
@@ -16,54 +21,208 @@
 
         function ichiran() {
             var disp = document.getElementById("disp");
-            
-            if( disp.hasChildNodes() ){
+
+            if (disp.hasChildNodes()) {
                 // 子要素をすべて削除する　https://into-the-program.com/removechild/#removeChild
-                while(disp.lastChild){
+                while (disp.lastChild) {
                     disp.removeChild(disp.lastChild);
                 }
             }
 
-            Food.fetchAll()
+            Food.order("kirokuDate", true)
+                .fetchAll()
                 .then(function(results) {
                     for (var i = 0; i < results.length; i++) {
-                        var new_element1 = document.createElement('p');
-                        var new_element2 = document.createElement('p');
-                        var new_element3 = document.createElement('p');
-                        var new_element4 = document.createElement('p');
-                        var new_element5 = document.createElement('p');
-                        var new_element6 = document.createElement('hr');
 
+                        
+                        var new_element1 = document.createElement('label');
+                        new_element1.innerHTML = "記録日：<input type=\"date\" id=\"kirokuDate"+ i + "\"><br>";
+
+                        var new_element2 = document.createElement('label');
+                        var new_element3 = document.createElement('label');
+                        var new_element4 = document.createElement('label');
+                        var new_element5 = document.createElement('label');
+                        var new_element6 = document.createElement('hr');
+                        var new_element7 = document.createElement('label');
+                        var new_element8 = document.createElement('br');
+                        var new_element9 = document.createElement('hr');
+                        var new_element10 = document.createElement('input');
+                        var new_element11 = document.createElement('input');
+                        
+
+                         //水平線
+                        disp.append(new_element6);
+                        
                         var object = results[i];
 
-                        new_element1.textContent = "記録日：" + object.myfood["kirokuDate"];
+                        var val = object.kirokuDate;
+                        new_element1.firstElementChild.setAttribute('value', val);
                         disp.append(new_element1);
 
-                        new_element2.textContent = "主菜：" + object.myfood["maindish"];
+                        var radioName = "radio" + i;
+                        if (object.kubun === "朝ごはん") {
+                            new_element7.innerHTML = "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun1-" + i + "\" value=\"朝ごはん\" checked>朝ご飯</label>";
+                        } else {
+                            new_element7.innerHTML = "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun1-" + i + "\" value=\"朝ごはん\">朝ご飯</label>";
+
+                        }
+                        val = object.kubun;
+                        new_element7.firstElementChild.setAttribute('value', val);
+                        disp.append(new_element7);
+
+                        if (object.kubun === "昼ごはん") {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun2-" + i + "\" value=\"昼ごはん\" checked>昼ごはん<label>";
+                        } else {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun2-" + i + "\" value=\"昼ごはん\">昼ごはん<label>";
+                        }
+                        val = object.kubun;
+                        disp.append(new_element7);
+
+                        if (object.kubun === "晩ごはん") {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun3-" + i + "\" value=\"晩ごはん\" checked>晩ごはん<label>";
+                        } else {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun3-" + i + "\" value=\"晩ごはん\">晩ごはん<label>";
+
+                        }
+                        val = object.kubun;
+                        disp.append(new_element7);
+
+                        if (object.kubun === "その他") {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun4-" + i + "\" value=\"その他\" checked>その他<label><br>";
+                        } else {
+                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun4-" + i + "\" value=\"その他\">その他<label><br>";
+                        }
+                        val = object.kubun;
+                        disp.append(new_element7);
+
+                        new_element2.innerHTML = "主菜：<input type=\"text\" id=\"maindish"+ i + "\"><br>";
+                        val = object.maindish;
+                        new_element2.firstElementChild.setAttribute('value', val);
                         disp.append(new_element2);
 
-                        new_element3.textContent = "副菜：" + object.myfood["sidedish"];
+                        new_element3.innerHTML = "副菜：<input type=\"text\" id=\"sidedish"+ i + "\"><br>";
+                        val = object.sidedish;
+                        new_element3.firstElementChild.setAttribute('value', val);
                         disp.append(new_element3);
 
-                        new_element4.textContent = "炭水化物：" + object.myfood["tansui"];
+                        new_element4.innerHTML = "炭水化物：<input type=\"text\" id=\"tansui"+ i + "\"><br>";
+                        val = object.tansui;
+                        new_element4.firstElementChild.setAttribute('value', val);
                         disp.append(new_element4);
 
-                        new_element5.textContent = "汁物：" + object.myfood["soup"];
+                        new_element5.innerHTML = "汁物：<input type=\"text\" id=\"soup"+ i + "\"><br>";
+                        val = object.soup;
+                        new_element5.firstElementChild.setAttribute('value', val);
                         disp.append(new_element5);
 
-                        disp.append(new_element6);
+
+                        //削除ボタン
+                        new_element10.setAttribute("type", "button");
+                        new_element10.setAttribute("onclick", "sakujyo(" + "\"" + object.objectId + "\"" + ")");
+                        new_element10.setAttribute("value", "削除");
+                        disp.append(new_element10);
+
+                        //更新ボタン
+                        new_element11.setAttribute("type", "button");
+                        new_element11.setAttribute("onclick", "update(" + "\"" + object.objectId + "\"" + "," + i + ")");
+                        new_element11.setAttribute("value", "更新");
+                        disp.append(new_element11);
+                        
                     }
+
                 })
                 .catch(function(err) {
                     document.write(err);
                 });
+
         }
+
+        function sakujyo(id) {
+
+            Food.fetchById(id)
+                .then( async function(item) {
+
+                    var yesno = window.confirm("削除しますか？");
+                    if( yesno == true ){
+                        await item.delete();
+                    }
+                })
+                .catch(function(err) {
+                    
+                })
+                .finally(function() {
+                    ichiran();
+                });
+        }
+
+        function update(id, i){
+
+            // 入力データを変数に保存
+            if( document.getElementById("kirokuDate" + i).value != "" ){
+                var kirokuDate = document.getElementById("kirokuDate" + i).value
+            }else{
+                alert("日付を入力して下さい");
+                return;
+            }        
+            var kubun;
+            var kubun1 = document.getElementById("kubun1-" + i)
+            var kubun2 = document.getElementById("kubun2-" + i)
+            var kubun3 = document.getElementById("kubun3-" + i)
+            var kubun4 = document.getElementById("kubun4-" + i)
+
+            
+            if( kubun1.checked ){
+                kubun = kubun1.value
+            }
+            if( kubun2.checked ){
+                kubun = kubun2.value
+            }
+            if( kubun3.checked ){
+                kubun = kubun3.value
+            }
+            if( kubun4.checked ){
+                kubun = kubun4.value
+            }
+
+
+            var maindish = document.getElementById("maindish" + i).value;
+            var sidedish = document.getElementById("sidedish" + i).value;
+            var tansui = document.getElementById("tansui" + i).value;
+            var soup = document.getElementById("soup" + i).value;
+
+            console.log(maindish);
+            console.log(sidedish);
+            console.log(tansui);
+            console.log(soup);
+            console.log(kubun);
+            console.log(i);
+
+            Food.fetchById(id)
+                .then(async function(item){
+                    item.set("kirokuDate", kirokuDate)
+                    item.set("kubun", kubun)
+                    item.set("maindish", maindish)
+                    item.set("sidedish", sidedish)
+                    item.set("tansui", tansui)
+                    item.set("soup", soup)
+                    .update();
+
+                    await alert("更新しました");
+                })
+                .catch(function(err){
+                })
+                .finally(function() {
+                    ichiran();
+                });
+                
+
+        }
+
     </script>
 </head>
 
 <body>
-    <a href=\ "index.html\">トップページ</a>
-    <input type="button" value="一覧" onclick="ichiran()">
+    <input type="button" id="back" onclick="location.href='index.html'" value="戻る">
     <div id="disp"></div>
 </body>
 
