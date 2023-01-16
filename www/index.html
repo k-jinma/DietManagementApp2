@@ -15,25 +15,30 @@
         var Food = ncmb.DataStore("Food");
 
 
+        // 確定ボタンが押下されたときに実行
         function kakutei(){
            
             // 保存先クラスのインスタンスを生成
             var food = new Food();
 
-            // 入力データを変数に保存①
+            // 日付が未入力でなければ
             if( document.getElementById("kirokuDate").value != "" ){
                 var kirokuDate = document.getElementById("kirokuDate").value
+
+            // 日付が未入力であればエラーメッセージを表示する
             }else{
                 alert("日付を入力して下さい");
                 return;
-            }        
+            }
+
+            // 入力された区分を取得する        
             var kubun;
             var kubun1 = document.getElementById("kubun1")
             var kubun2 = document.getElementById("kubun2")
             var kubun3 = document.getElementById("kubun3")
             var kubun4 = document.getElementById("kubun4")
 
-            
+            // チェックされた区分を取り出す
             if( kubun1.checked ){
                 kubun = kubun1.value
             }
@@ -47,13 +52,16 @@
                 kubun = kubun4.value
             }
 
-
+            // 入力された主食を取り出す
             var maindish = document.getElementById("maindish").value;
+            // 入力された副菜を取り出す
             var sidedish = document.getElementById("sidedish").value;
+            // 入力された炭水化物を取り出す
             var tansui = document.getElementById("tansui").value;
+            // 入力された汁物を取り出す
             var soup = document.getElementById("soup").value;
 
-            // ①の変数を、データストアに保存
+            // 取り出した変数を、データストアに保存
             food.set("kirokuDate", kirokuDate)
                 .set("kubun", kubun)
                 .set("maindish", maindish)
@@ -71,8 +79,8 @@
                 });
 
         }
-
     </script>
+    
 </head>
 <body>
     <input type="button" id="back" onclick="location.href='ichiran.html'" value="一覧">
