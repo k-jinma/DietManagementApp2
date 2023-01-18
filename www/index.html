@@ -83,7 +83,10 @@
 
 </head>
 <body>
-    <input type="button" id="back" onclick="location.href='ichiran.html'" value="一覧">
+    <h1>食事管理アプリ</h1>
+    <p>
+        <input class="ichiran" type="button" id="back" onclick="location.href='ichiran.html'" value="一覧">
+    </p>
 	<table>
         <tr>
             <td>日付</td>
@@ -94,6 +97,7 @@
                 <label><input type="radio" name="kubun" id="kubun1" value="朝ごはん" checked>朝ごはん</label>
                 <label><input type="radio" name="kubun" id="kubun2" value="昼ごはん">昼ごはん</label>
                 <label><input type="radio" name="kubun" id="kubun3" value="晩ごはん">晩ごはん</label>
+                <br>
                 <label><input type="radio" name="kubun" id="kubun4" value="その他">その他</label>     
             </td>
         </tr>
@@ -114,8 +118,10 @@
             <td><input type="text" id="soup"></td>
         </tr> 
         <tr>
-            <td><input type="button" value="確定" onclick="kakutei()"></td>
         </tr>
     </table>
+        <p>
+            <input class="kakutei" type="button" value="確定" onclick="kakutei()">
+        </p>
 </body>
 </html>

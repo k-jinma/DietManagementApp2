@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="components/loader.js"></script>
     <script>
 
@@ -130,12 +131,14 @@
 
                         //削除ボタンを作る
                         new_element10.setAttribute("type", "button");
+                        new_element10.setAttribute("class", "sakujyo");
                         new_element10.setAttribute("onclick", "sakujyo(" + "\"" + object.objectId + "\"" + ")");
                         new_element10.setAttribute("value", "削除");
                         disp.append(new_element10);
 
                         //更新ボタンを作る
                         new_element11.setAttribute("type", "button");
+                        new_element11.setAttribute("class", "koushin");
                         new_element11.setAttribute("onclick", "update(" + "\"" + object.objectId + "\"" + "," + i + ")");
                         new_element11.setAttribute("value", "更新");
                         disp.append(new_element11);
@@ -241,7 +244,9 @@
 </head>
 
 <body>
-    <input type="button" id="back" onclick="location.href='index.html'" value="戻る">
+    <h1>食事管理アプリ</h1>
+
+    <input type="button" class="back" id="back" onclick="location.href='index.html'" value="戻る">
     <div id="disp"></div>
 </body>
 

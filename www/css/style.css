@@ -1,2 +1,52 @@
 /**/
 
+h1{
+    font-size: large;
+    background-color: antiquewhite;
+    text-align: center;
+}
+p{
+    text-align: center;
+}
+.ichiran{
+    font-size: large;
+    width: 100%;
+    background: lightblue;
+    border-radius: 6px;
+    border: oldlace;
+}
+.kakutei{
+    font-size: large;
+    width: 100%;
+    background:pink;
+    border-radius: 6px;
+    border: oldlace;
+}
+
+.sakujyo{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: large;
+    width: 100%;
+    background: lightpink;
+    border-radius: 6px;
+    border: oldlace;
+}
+
+.koushin{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: large;
+    width: 100%;
+    background: aquamarine; 
+    border-radius: 6px;
+    border: oldlace;
+}
+
+.back{
+    font-size: large;
+    width: 100%;
+    background: lightblue;
+    border-radius: 6px;
+    border: oldlace;
+}
