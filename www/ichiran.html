@@ -93,7 +93,7 @@
 
                         // 削除ボタン
                         tag = document.createElement("label");
-                        //<input type="button" value="削除" onclick="sakujyo()">   
+                        //<input type="button" value="削除" onclick="sakujyo('   ')">   
                         tag.innerHTML = "<input type=\"button\" class=\"sakujyo\" value=\"削除\" onclick=\"sakujyo('" + record.objectId + "')\"> ";
                         disp.append(tag);
 
@@ -107,7 +107,8 @@
 
                 })
                 .catch(function(err) {
-                    document.write(err);
+                    //データ読み込み時にエラーが発生したとき
+                    alert("データが表示できませんでした");
                 });
 
         }
@@ -117,13 +118,13 @@
 
             // 押されたボタンのid（データストアのデータのID）でデータストアを検索する
             Food.fetchById(id)
-                .then( async function(item) {
+                .then( function(item) {
                     // 削除するかメッセージを出す
                     var yesno = window.confirm("削除しますか？");
                     // 削除する場合のみ削除する
                     if( yesno == true ){
                         // 削除されるまで待つ
-                        await item.delete();
+                       item.delete();
                     }
                 })
                 .catch(function(err) {

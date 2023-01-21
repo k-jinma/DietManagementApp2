@@ -13,8 +13,6 @@
 
         // 保存先クラスの作成
         var Food = ncmb.DataStore("Food");
-
-        var url = location.search;
         
         // 押されたレコードのIDを取り出す
         // 参考　https://maku77.github.io/js/web/search-params.html
@@ -25,7 +23,6 @@
         Food.fetchById(id)
             .then( function(item) {
                 document.getElementById("kirokuDate").value = item.kirokuDate;
-                console.log(item.kubun);
                 if(item.kubun == "朝ごはん" )   document.getElementById("kubun1").checked = true;
                 if(item.kubun == "昼ごはん" )   document.getElementById("kubun2").checked = true;
                 if(item.kubun == "晩ごはん" )   document.getElementById("kubun3").checked = true;
@@ -47,6 +44,11 @@
           Food.fetchById(id)
             .then(async function(item){
                 item.set("kirokuDate", document.getElementById("kirokuDate").value )
+                if(document.getElementById("kubun1").checked)   item.set("kubun","朝ごはん");
+                if(document.getElementById("kubun2").checked)   item.set("kubun","昼ごはん");
+                if(document.getElementById("kubun3").checked)   item.set("kubun","晩ごはん");
+                if(document.getElementById("kubun4").checked)   item.set("kubun","その他");
+
                 item.set("maindish", document.getElementById("maindish").value )
                 item.set("sidedish", document.getElementById("sidedish").value )
                 item.set("tansui", document.getElementById("tansui").value )
