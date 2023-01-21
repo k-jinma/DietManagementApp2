@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        // APIキーの設定とSDK初期化
+        var ncmb = new NCMB("5906fd68d324c76f48d4c29c3cb589250d728cd08362e485a2732a6caeb8ce0e","419f8c9f191f95603e7c73a16f8e771393604da508e5960b537126afae8cfd59");
+
+        // 保存先クラスの作成
+        var Food = ncmb.DataStore("Food");
+
+        var url = location.search;
+        
+        // 押されたレコードのIDを取り出す
+        // 参考　https://maku77.github.io/js/web/search-params.html
+        var params = new URLSearchParams(location.search);
+        var id = params.get('id');
+        
+        // 押されたボタンのid（データストアのデータのID）でデータストアを検索する
+        Food.fetchById(id)
+            .then( function(item) {
+                document.getElementById("kirokuDate").value = item.kirokuDate;
+                console.log(item.kubun);
+                if(item.kubun == "朝ごはん" )   document.getElementById("kubun1").checked = true;
+                if(item.kubun == "昼ごはん" )   document.getElementById("kubun2").checked = true;
+                if(item.kubun == "晩ごはん" )   document.getElementById("kubun3").checked = true;
+                if(item.kubun == "その他" )     document.getElementById("kubun4").checked = true;
+
+                document.getElementById("maindish").value = item.maindish;
+                document.getElementById("sidedish").value = item.sidedish;
+                document.getElementById("tansui").value = item.tansui;
+                document.getElementById("soup").value = item.soup;
+
+            })
+            .catch(function(err) {
+
+            })
+
+
+      function update(){
+
+          Food.fetchById(id)
+            .then(async function(item){
+                item.set("kirokuDate", document.getElementById("kirokuDate").value )
+                item.set("maindish", document.getElementById("maindish").value )
+                item.set("sidedish", document.getElementById("sidedish").value )
+                item.set("tansui", document.getElementById("tansui").value )
+                item.set("soup", document.getElementById("soup").value )
+                .update();
+
+                await alert("更新しました");
+            })
+            .catch(function(err){
+            })
+      }
+    </script>
+
+</head>
+<body>
+    <h1>食事管理アプリ</h1>
+    <p>
+        <input class="ichiran" type="button" id="back" onclick="location.href='ichiran.html'" value="一覧">
+    </p>
+	<table>
+        <tr>
+            <td>日付</td>
+            <td><input type="date" id="kirokuDate"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label><input type="radio" name="kubun" id="kubun1" value="朝ごはん" checked>朝ごはん</label>
+                <label><input type="radio" name="kubun" id="kubun2" value="昼ごはん">昼ごはん</label>
+                <label><input type="radio" name="kubun" id="kubun3" value="晩ごはん">晩ごはん</label>
+                <br>
+                <label><input type="radio" name="kubun" id="kubun4" value="その他">その他</label>     
+            </td>
+        </tr>
+        <tr>
+            <td>主菜</td>
+            <td><input type="text" id="maindish"></td>
+        </tr>
+        <tr>
+            <td>副菜</td>
+            <td><input type="text" id="sidedish"></td>
+        </tr>
+        <tr>
+            <td>炭水化物</td>
+            <td><input type="text" id="tansui"></td>
+        </tr>
+        <tr>
+            <td>汁物</td>
+            <td><input type="text" id="soup"></td>
+        </tr> 
+        <tr>
+        </tr>
+    </table>
+        <p>
+            <input class="kakutei" type="button" value="更新" onclick="update()">
+        </p>
+</body>
+</html>

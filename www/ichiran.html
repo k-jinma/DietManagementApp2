@@ -42,107 +42,67 @@
                     // 取り出したデータを１件ずつ処理する
                     for (var i = 0; i < results.length; i++) {
 
-                        // 画面に表示するタグを作るための部品を宣言
-                        var new_element1 = document.createElement('label');
-                        new_element1.innerHTML = "記録日：<input type=\"date\" id=\"kirokuDate"+ i + "\"><br>";
-
-                        var new_element2 = document.createElement('label');
-                        var new_element3 = document.createElement('label');
-                        var new_element4 = document.createElement('label');
-                        var new_element5 = document.createElement('label');
-                        var new_element6 = document.createElement('hr');    // 水平線
-                        var new_element7 = document.createElement('label');
-                        var new_element8 = document.createElement('br');    // 改行
-                        var new_element9 = document.createElement('hr');    // 水平線
-                        var new_element10 = document.createElement('input');    // 入力ボックス
-                        var new_element11 = document.createElement('input');    // 入力ボックス
-                        
-                         //水平線を追加
-                        disp.append(new_element6);
-                        
                         // 1件目のデータを取り出す
-                        var object = results[i];
+                        var record = results[i];
 
-                        // kirokuDate 日付表示エリアを作る
-                        var val = object.kirokuDate;
-                        new_element1.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element1);
+                        // 水平線
+                        var tag = document.createElement('hr');
+                        disp.append(tag);
 
-                        // 区分の表示エリアを作る
-                        var radioName = "radio" + i;
-                        if (object.kubun === "朝ごはん") {
-                            new_element7.innerHTML = "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun1-" + i + "\" value=\"朝ごはん\" checked>朝ご飯</label>";
+                        // 画面に表示するタグ（記録日）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = "記録日：" + record.kirokuDate + "　";
+                        // タグを追加する
+                        disp.append(tag);
 
-                        } else {
-                            new_element7.innerHTML = "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun1-" + i + "\" value=\"朝ごはん\">朝ご飯</label>";
-                        }
-                        val = object.kubun;
-                        new_element7.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element7);
+                        // 画面に表示するタグ（区分）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = record.kubun + "<br>";
+                        // タグを追加する
+                        disp.append(tag);
 
-                        if (object.kubun === "昼ごはん") {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun2-" + i + "\" value=\"昼ごはん\" checked>昼ごはん<label>";
-                        } else {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun2-" + i + "\" value=\"昼ごはん\">昼ごはん<label>";
-                        }
-                        val = object.kubun;
-                        disp.append(new_element7);
+                        // 画面に表示するタグ（主菜）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = "主菜：" + record.maindish + "　";
+                        // タグを追加する
+                        disp.append(tag);
 
-                        if (object.kubun === "晩ごはん") {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun3-" + i + "\" value=\"晩ごはん\" checked>晩ごはん<label>";
-                        } else {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun3-" + i + "\" value=\"晩ごはん\">晩ごはん<label>";
-
-                        }
-                        val = object.kubun;
-                        disp.append(new_element7);
-
-                        if (object.kubun === "その他") {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun4-" + i + "\" value=\"その他\" checked>その他<label><br>";
-                        } else {
-                            new_element7.innerHTML += "<label><input type=\"radio\" name=\" " + radioName + " \" id=\"kubun4-" + i + "\" value=\"その他\">その他<label><br>";
-                        }
-                        val = object.kubun;
-                        disp.append(new_element7);
-
-                        // 主菜の表示エリアを作る
-                        new_element2.innerHTML = "主菜：<input type=\"text\" id=\"maindish"+ i + "\"><br>";
-                        val = object.maindish;
-                        new_element2.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element2);
-
-                        // 副菜の表示エリアを作る
-                        new_element3.innerHTML = "副菜：<input type=\"text\" id=\"sidedish"+ i + "\"><br>";
-                        val = object.sidedish;
-                        new_element3.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element3);
-
-                        // 炭水化物の表示エリアを作る
-                        new_element4.innerHTML = "炭水化物：<input type=\"text\" id=\"tansui"+ i + "\"><br>";
-                        val = object.tansui;
-                        new_element4.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element4);
-
-                        // 汁物の表示エリアを作る
-                        new_element5.innerHTML = "汁物：<input type=\"text\" id=\"soup"+ i + "\"><br>";
-                        val = object.soup;
-                        new_element5.firstElementChild.setAttribute('value', val);
-                        disp.append(new_element5);
-
-                        //削除ボタンを作る
-                        new_element10.setAttribute("type", "button");
-                        new_element10.setAttribute("class", "sakujyo");
-                        new_element10.setAttribute("onclick", "sakujyo(" + "\"" + object.objectId + "\"" + ")");
-                        new_element10.setAttribute("value", "削除");
-                        disp.append(new_element10);
-
-                        //更新ボタンを作る
-                        new_element11.setAttribute("type", "button");
-                        new_element11.setAttribute("class", "koushin");
-                        new_element11.setAttribute("onclick", "update(" + "\"" + object.objectId + "\"" + "," + i + ")");
-                        new_element11.setAttribute("value", "更新");
-                        disp.append(new_element11);
+                        // 画面に表示するタグ（副菜）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = "副菜：" + record.sidedish + "　";
+                        // タグを追加する
+                        disp.append(tag);
                         
+                        // 画面に表示するタグ（炭水化物）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = "炭水化物：" + record.tansui + "　";
+                        // タグを追加する
+                        disp.append(tag);
+
+                        // 画面に表示するタグ（汁物）を作る
+                        tag = document.createElement('label');
+                        // タグの中を書く
+                        tag.innerHTML = "汁物：" + record.soup + "<br>";
+                        // タグを追加する
+                        disp.append(tag);
+
+                        // 削除ボタン
+                        tag = document.createElement("label");
+                        //<input type="button" value="削除" onclick="sakujyo()">   
+                        tag.innerHTML = "<input type=\"button\" class=\"sakujyo\" value=\"削除\" onclick=\"sakujyo('" + record.objectId + "')\"> ";
+                        disp.append(tag);
+
+                        // 更新ボタン
+                        tag = document.createElement("label");
+                        //<input type="button" value="更新" onclick="location.href='update.html?@@@@'">   
+                        tag.innerHTML = "<input type=\"button\" class=\"koushin\" value=\"更新\" onclick=\"location.href='update.html?id=" + record.objectId + "'\"> ";
+                        disp.append(tag);
+
                     }
 
                 })
@@ -162,6 +122,7 @@
                     var yesno = window.confirm("削除しますか？");
                     // 削除する場合のみ削除する
                     if( yesno == true ){
+                        // 削除されるまで待つ
                         await item.delete();
                     }
                 })
@@ -174,71 +135,6 @@
                 });
         }
 
-        // 更新ボタンが押されたときの処理
-        function update(id, i){
-
-            // 更新ボタンがおされた箇所の各入力データを変数に保存する
-            // 日付
-            if( document.getElementById("kirokuDate" + i).value != "" ){
-                var kirokuDate = document.getElementById("kirokuDate" + i).value
-            }else{
-                alert("日付を入力して下さい");
-                return;
-            }
-
-            // 区分  
-            var kubun;
-            var kubun1 = document.getElementById("kubun1-" + i)
-            var kubun2 = document.getElementById("kubun2-" + i)
-            var kubun3 = document.getElementById("kubun3-" + i)
-            var kubun4 = document.getElementById("kubun4-" + i)
-
-            if( kubun1.checked ){
-                kubun = kubun1.value
-            }
-            if( kubun2.checked ){
-                kubun = kubun2.value
-            }
-            if( kubun3.checked ){
-                kubun = kubun3.value
-            }
-            if( kubun4.checked ){
-                kubun = kubun4.value
-            }
-
-            // 主菜
-            var maindish = document.getElementById("maindish" + i).value;
-            // 副菜
-            var sidedish = document.getElementById("sidedish" + i).value;
-            // 炭水化物
-            var tansui = document.getElementById("tansui" + i).value;
-            // 汁物
-            var soup = document.getElementById("soup" + i).value;
-
-            // 押されたボタンのid（データストアのデータのID）でデータストアを検索する
-            Food.fetchById(id)
-                .then(async function(item){
-                    // 入力されたデータでデータストアの各項目を上書きする
-                    item.set("kirokuDate", kirokuDate)
-                    item.set("kubun", kubun)
-                    item.set("maindish", maindish)
-                    item.set("sidedish", sidedish)
-                    item.set("tansui", tansui)
-                    item.set("soup", soup)
-                    .update();
-
-                    await alert("更新しました");
-                })
-
-                .catch(function(err){
-                })
-
-                // 更新してもしなくても、再度、一覧表示する（画面を再読み込みする）
-                .finally(function() {
-                    ichiran();
-                });
-                
-        }
 
     </script>
 </head>
@@ -247,7 +143,9 @@
     <h1>食事管理アプリ</h1>
 
     <input type="button" class="back" id="back" onclick="location.href='index.html'" value="戻る">
-    <div id="disp"></div>
+    <div id="disp">
+
+    </div>
 </body>
 
 </html>
